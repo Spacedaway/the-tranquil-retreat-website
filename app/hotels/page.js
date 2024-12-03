@@ -1,12 +1,13 @@
 import HotelCard from "../_components/HotelCard";
+import { getHotels } from "../_lib/data-service";
 
 export const metadata = {
 	title: "Hotels",
 };
 
-export default function Page() {
+export default async function Page() {
 	// CHANGE
-	const hotels = [];
+	const hotels = await getHotels();
 
 	return (
 		<div>
