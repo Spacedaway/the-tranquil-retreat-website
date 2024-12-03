@@ -11,7 +11,7 @@ export default function Home() {
 				fill
 				className="object-cover object-top"
 				placeholder="blur"
-				alt="Mountains and forests with two cabins"
+				alt="Mountains and forests with two hotels"
 			/>
 
 			<div className="relative z-10 text-center">

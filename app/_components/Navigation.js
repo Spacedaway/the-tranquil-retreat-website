@@ -6,10 +6,10 @@ export default function Navigation() {
 			<ul className="flex gap-16 items-center">
 				<li>
 					<Link
-						href="/cabins"
+						href="/hotels"
 						className="hover:text-accent-400 transition-colors"
 					>
-						Cabins
+						Hotels
 					</Link>
 				</li>
 				<li>
