@@ -1,5 +1,5 @@
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
-import { getHotel } from "../../_lib/data-service";
+import { getHotel, getHotels } from "../../_lib/data-service";
 import Image from "next/image";
 
 export async function generateMetadata({ params }) {
