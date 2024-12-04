@@ -4,7 +4,6 @@ import Image from "next/image";
 
 export async function generateMetadata({ params }) {
 	const hotel = await getHotel(params.hotelId);
-	console.log("🚀 ~ generateMetaData ~ hotel:", hotel);
 
 	return {
 		title: `Hotel ${hotel.name}`,
