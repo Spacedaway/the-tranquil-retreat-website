@@ -2,6 +2,15 @@ import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { getHotel } from "../../_lib/data-service";
 import Image from "next/image";
 
+export async function generateMetadata({ params }) {
+	const hotel = await getHotel(params.hotelId);
+	console.log("🚀 ~ generateMetaData ~ hotel:", hotel);
+
+	return {
+		title: `Hotel ${hotel.name}`,
+	};
+}
+
 export default async function Page({ params }) {
 	const hotel = await getHotel(params.hotelId);
 
