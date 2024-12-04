@@ -1,14 +1,12 @@
-import HotelCard from "../_components/HotelCard";
-import { getHotels } from "../_lib/data-service";
+import { Suspense } from "react";
+import { HotelList } from "../_components/HotelList";
+import Spinner from "../_components/Spinner";
 
 export const metadata = {
 	title: "Hotels",
 };
 
-export default async function Page() {
-	// CHANGE
-	const hotels = await getHotels();
-
+export default function Page() {
 	return (
 		<div>
 			<h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -23,13 +21,9 @@ export default async function Page() {
 				Welcome to paradise.
 			</p>
 
-			{hotels.length > 0 && (
-				<div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14">
-					{hotels.map((hotel) => (
-						<HotelCard hotel={hotel} key={hotel.id} />
-					))}
-				</div>
-			)}
+			<Suspense fallback={<Spinner />}>
+				<HotelList />
+			</Suspense>
 		</div>
 	);
 }
