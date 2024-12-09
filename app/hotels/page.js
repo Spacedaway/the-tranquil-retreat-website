@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import { HotelList } from "../_components/HotelList";
-import Spinner from "../_components/Spinner";
+
 import { Filter } from "../_components/Filter";
+import { Spinner } from "../_components/Spinner";
 
 export const metadata = {
 	title: "Hotels",
