@@ -3,6 +3,7 @@ import { HotelList } from "../_components/HotelList";
 
 import { Filter } from "../_components/Filter";
 import { Spinner } from "../_components/Spinner";
+import ReservationReminder from "../_components/ReservationReminder";
 
 export const metadata = {
 	title: "Hotels",
@@ -30,6 +31,7 @@ export default function Page({ searchParams }) {
 
 			<Suspense fallback={<Spinner />} key={filter}>
 				<HotelList filter={filter} />
+				<ReservationReminder />
 			</Suspense>
 		</div>
 	);
