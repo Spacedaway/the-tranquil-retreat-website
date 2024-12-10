@@ -1,5 +1,5 @@
 import { getBooking, getHotel } from "../../../../_lib/data-service";
-import { DeleteReservationForm } from "../../../../_components/DeleteReservationForm";
+import { UpdateReservationForm } from "../../../../_components/UpdateReservationForm";
 
 export async function generateMetadata({ params }) {
 	const booking = await getBooking(params.id);
@@ -22,7 +22,7 @@ export default async function Page({ params }) {
 				Edit Reservation #{bookingId}
 			</h2>
 
-			<DeleteReservationForm maxCapacity={maxCapacity} bookingId={bookingId} />
+			<UpdateReservationForm maxCapacity={maxCapacity} bookingId={bookingId} />
 		</div>
 	);
 }

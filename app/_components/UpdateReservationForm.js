@@ -3,7 +3,7 @@
 import { useFormStatus } from "react-dom";
 import { updateReservation } from "../_lib/actions";
 
-export function DeleteReservationForm({ bookingId, maxCapacity }) {
+export function UpdateReservationForm({ bookingId, maxCapacity }) {
 	return (
 		<form
 			action={updateReservation.bind(null, Number(bookingId))}
