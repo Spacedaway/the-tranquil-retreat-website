@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
 import { getBookings } from "./data-service";
+import { redirect } from "next/navigation";
 
 export async function signInAction() {
 	await signIn("google", { redirectTo: "/account" });
@@ -62,4 +63,36 @@ export async function deleteReservation(bookingId) {
 	if (error) throw new Error("Reservation could not be deleted");
 
 	revalidatePath("/account/reservations");
+}
+
+export async function updateReservation(bookingId, formData) {
+	const session = await auth();
+
+	if (!session) throw new Error("You must be logged in");
+
+	const guestBookings = await getBookings(session.user.guestId);
+	const bookingExists = guestBookings.some(
+		(booking) => booking.id === bookingId
+	);
+
+	if (!bookingExists) throw new Error("Reservation does not exist");
+
+	const numGuests = Number(formData.get("numGuests"));
+	const observations = formData.get("observations");
+
+	const updateData = { numGuests, observations };
+
+	const { data, error } = await supabase
+		.from("bookings")
+		.update(updateData)
+		.eq("id", bookingId)
+		.select()
+		.single();
+
+	if (error) throw new Error("Reservation could not be updated");
+
+	revalidatePath("/account/reservations");
+	revalidatePath(`/account/reservations/edit/${bookingId}`);
+
+	redirect("/account/reservations");
 }
