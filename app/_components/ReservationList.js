@@ -7,7 +7,7 @@ export function ReservationList({ bookings }) {
 	const [optimisticBookings, optimisticDelete] = useOptimistic(
 		bookings,
 		(currentBookings, bookingId) => {
-			currentBookings.filter((booking) => booking.id !== bookingId);
+			return currentBookings.filter((booking) => booking.id !== bookingId);
 		}
 	);
 

@@ -1,6 +1,28 @@
+"use client";
+
+import { differenceInDays } from "date-fns";
+import { useReservation } from "./ReservationContext";
+import { createBooking } from "../_lib/actions";
+import { useFormStatus } from "react-dom";
+
 function ReservationForm({ hotel, user }) {
-	// CHANGE
-	const { maxCapacity } = hotel;
+	const { range } = useReservation();
+	const { maxCapacity, regularPrice, discount, id } = hotel;
+
+	const startDate = range.from;
+	const endDate = range.to;
+
+	const numNights = differenceInDays(endDate, startDate);
+
+	const hotelPrice = numNights * regularPrice - discount;
+
+	const bookingData = {
+		startDate,
+		endDate,
+		numNights,
+		hotelPrice,
+		hotelId: id,
+	};
 
 	return (
 		<div className="scale-[1.01]">
@@ -18,7 +40,10 @@ function ReservationForm({ hotel, user }) {
 				</div>
 			</div>
 
-			<form className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col">
+			<form
+				action={createBooking.bind(null, bookingData)}
+				className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col"
+			>
 				<div className="space-y-2">
 					<label htmlFor="numGuests">How many guests?</label>
 					<select
@@ -52,10 +77,7 @@ function ReservationForm({ hotel, user }) {
 
 				<div className="flex justify-end items-center gap-6">
 					<p className="text-primary-300 text-base">Start by selecting dates</p>
-
-					<button className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300">
-						Reserve now
-					</button>
+					<Button />
 				</div>
 			</form>
 		</div>
@@ -63,3 +85,15 @@ function ReservationForm({ hotel, user }) {
 }
 
 export default ReservationForm;
+
+function Button() {
+	const { pending } = useFormStatus();
+	return (
+		<button
+			disabled={pending}
+			className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
+		>
+			{pending ? "Reserving..." : "Reserve now"}
+		</button>
+	);
+}
